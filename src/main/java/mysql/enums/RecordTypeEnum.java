@@ -2,10 +2,10 @@ package mysql.enums;
 
 public enum RecordTypeEnum {
     //0表示普通记录，1表示B+树非叶节点记录，2表示最小记录，3表示最大记录
-    normal("普通记录", 0),
-    not_leaf("B+树非叶节点记录", 1),
-    min_leaf("最小记录", 2),
-    max_leaf("最大记录", 3);
+    normal("普通记录", -1),
+    not_leaf("B+树非叶节点记录", -1),
+    min_leaf("最小记录", -1),
+    max_leaf("最大记录", -1);
 
     private String desc;
     private int code;
