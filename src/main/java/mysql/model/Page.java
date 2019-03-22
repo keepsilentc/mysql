@@ -5,6 +5,15 @@ import mysql.enums.PageTypeEnum;
 import mysql.reader.ByteReader;
 import mysql.reader.Reader;
 
+/**
+ * 页
+ * 16kb
+ * -----------------------------------------------------
+ * fileHeader       38字节
+ * fileBody         16338字节
+ * fileTrailer      8字节
+ * -----------------------------------------------------
+ */
 @Data
 public class Page implements Reader<Page> {
 
@@ -25,6 +34,9 @@ public class Page implements Reader<Page> {
                 break;
             case INODE:
                 fileBody = new INode();
+                break;
+            case XDES:
+                fileBody = new XDes();
                 break;
 
         }

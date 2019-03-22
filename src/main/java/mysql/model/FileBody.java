@@ -6,7 +6,7 @@ import mysql.reader.Reader;
 
 /**
  * 页体 16338字节
- * 根据PageType分为不同
+ * 根据PageType分为不同类型
  */
 @Data
 public abstract class FileBody<T extends FileBody> implements Reader<T> {

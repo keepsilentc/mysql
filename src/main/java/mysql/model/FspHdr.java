@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * 表空间头部信息
- * 16338 字节
  * --------------------------------
  * fileSpaceHeader     112字节
  * xDesEntryList       10240(256*40) 字节
