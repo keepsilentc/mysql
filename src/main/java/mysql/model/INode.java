@@ -32,7 +32,7 @@ public class INode extends FileBody<INode> {
         this.listNode = new ListNode().read(bytes, offset);
         List<INodeEntry> iNodeEntryList = new ArrayList<>(85);
         for (int i = 0; i < 85; i++) {
-            iNodeEntryList.add(new INodeEntry().read(bytes, 12 + offset + 85 * i));
+            iNodeEntryList.add(new INodeEntry().read(bytes, offset + 12 + 85 * i));
         }
         this.iNodeEntryList = iNodeEntryList;
         return this;

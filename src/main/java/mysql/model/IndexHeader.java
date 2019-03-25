@@ -10,7 +10,7 @@ import mysql.reader.Reader;
  * -------------------------------------------------------------------------------------
  * nDirSlot	        2字节	    在页目录中的槽数量
  * heapTop	        2字节	    还未使用的空间最小地址，也就是说从该地址之后就是Free Space
- * nHeap	        2字节	    本页中的记录的数量（包括最小和最大记录以及标记为删除的记录）
+ * nHeap	        2字节	    本页中的记录的数量（包括最小和最大记录以及标记为删除的记录） 前15位表示行记录格式
  * free	            2字节	    第一个已经标记为删除的记录地址（各个已删除的记录通过next_record也会组成一个单链表，这个单链表中的记录可以被重新利用）
  * garbage	        2字节	    已删除记录占用的字节数
  * lastInsert	    2字节	    最后插入记录的位置
@@ -20,12 +20,13 @@ import mysql.reader.Reader;
  * maxTrxId	        8字节	    修改当前页的最大事务ID，该值仅在二级索引中定义
  * level	        2字节	    当前页在B+树中所处的层级
  * indexId	        8字节	    索引ID，表示当前页属于哪个索引
+ *
  * btrSegLeaf	    10字节	    B+树叶子段的头部信息，仅在B+树的Root页定义
- * btrSegTop	    10字节	    B+树非叶子段的头部信息，仅在B+树的Root页
+ * btrSegTop	    10字节	    B+树非叶子段的头部信息，仅在B+树的Root页定义
  * ----------------------------------------------------------------------------------------
  */
 @Data
-public class PageHeader implements Reader<PageHeader> {
+public class IndexHeader implements Reader<IndexHeader> {
 
     private short nDirSlot;
 
@@ -56,7 +57,7 @@ public class PageHeader implements Reader<PageHeader> {
     private SegmentHeader btrSegTop;
 
     @Override
-    public PageHeader read(byte[] bytes, int offset) {
+    public IndexHeader read(byte[] bytes, int offset) {
         ByteReader byteReader = new ByteReader(bytes, offset);
         this.nDirSlot = byteReader.readShort();
         this.heapTop = byteReader.readShort();

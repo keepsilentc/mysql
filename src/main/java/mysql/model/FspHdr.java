@@ -27,7 +27,7 @@ public class FspHdr extends FileBody<FspHdr> {
         this.fileSpaceHeader = new FileSpaceHeader().read(bytes, offset);
         List<XDesEntry> xDesEntryList = new ArrayList<>(256);
         for (int i = 0; i < 256; i++) {
-            xDesEntryList.add(new XDesEntry().read(bytes, 112 + i * 40));
+            xDesEntryList.add(new XDesEntry().read(bytes, offset + 112 + i * 40));
         }
         this.xDesEntryList = xDesEntryList;
         return this;

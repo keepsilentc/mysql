@@ -57,17 +57,13 @@ public class ByteReader {
     }
 
     public String readString(int byteLength) {
-        StringBuilder stringBuilder = new StringBuilder("");
+
+        byte[] bytes = new byte[byteLength];
 
         for (int i = 0; i < byteLength; i++) {
-            int v = read();
-            String hv = Integer.toHexString(v);
-            if (hv.length() < 2) {
-                stringBuilder.append(0);
-            }
-            stringBuilder.append(hv);
+            bytes[i] = (byte) read();
         }
-        return stringBuilder.toString();
+        return new String(bytes);
     }
 
 }

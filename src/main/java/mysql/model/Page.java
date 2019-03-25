@@ -27,6 +27,7 @@ public class Page implements Reader<Page> {
     public Page read(byte[] bytes, int offset) {
         ByteReader byteReader = new ByteReader(bytes, offset);
         this.fileHeader = new FileHeader().read(bytes, offset);
+        byteReader.skip(38);
 
         switch (PageTypeEnum.findByCode(fileHeader.getPageType())) {
             case FSP_HDR:
@@ -38,13 +39,15 @@ public class Page implements Reader<Page> {
             case XDES:
                 fileBody = new XDes();
                 break;
-
+            case INDEX:
+                fileBody = new Index();
+                break;
         }
         if (fileBody != null) {
             fileBody.read(bytes, offset + byteReader.getPosition());
         }
 
-        byteReader.skip(16 * 1024 - 38);
+        byteReader.skip(16 * 1024 - 38 - 8);
         this.fileTrailer = new FileTrailer().read(bytes, offset + byteReader.getPosition());
         return this;
     }
