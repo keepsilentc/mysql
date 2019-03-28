@@ -1,16 +1,17 @@
-package mysql;
+package mysql.ibdata;
 
-import mysql.enums.PageTypeEnum;
-import mysql.model.FspHdr;
-import mysql.model.INode;
-import mysql.model.Index;
-import mysql.model.Page;
+import mysql.ibdata.model.FspHdr;
+import mysql.ibdata.model.INode;
+import mysql.ibdata.model.Index;
+import mysql.ibdata.model.Page;
+import mysql.reader.ByteReader;
 
 import java.io.FileInputStream;
 
+import static mysql.constants.Constants.pageByte;
+
 public class Test {
 
-    private static final int pageByte = 16 * 1024;
 
     public static void main(String[] args) throws Exception {
         FileInputStream fileInputStream = new FileInputStream("/usr/local/ibdata1");
@@ -34,18 +35,19 @@ public class Test {
                             break;
                         case INDEX:
                             Index index = (Index) page.getFileBody();
-//                            if (page.getFileHeader().getSpaceId() != 0) {
-//                                System.out.println(index.getInfimum());
-//                                System.out.println(index.getSupremum());
-//                            }
+                            if (page.getFileHeader().getSpaceId() != 0) {
+//                                System.out.println((index.getIndexHeader().getNHeap() & 0x8000) >> 24);
+//                                System.out.println(index.getInfimum().getNextRecord());
+//                                System.out.println(index.getSupremum().getNextRecord());
+                            }
                             break;
                     }
                 }
 
-                if (page.getFileHeader().getSpaceId() != 0) {
-                    System.out.println("spaceId: " + page.getFileHeader().getSpaceId() + ", pageNum: " + page.getFileHeader().getPageNum());
-                    System.out.println(PageTypeEnum.findByCode(page.getFileHeader().getPageType()));
-                }
+//                if (page.getFileHeader().getSpaceId() != 0) {
+//                    System.out.println("spaceId: " + page.getFileHeader().getSpaceId() + ", pageNum: " + page.getFileHeader().getPageNum());
+//                    System.out.println(PageTypeEnum.findByCode(page.getFileHeader().getPageType()));
+//                }
 
                 totalPage += 1;
                 position = 0;

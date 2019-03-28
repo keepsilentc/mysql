@@ -1,7 +1,7 @@
-package mysql.model;
+package mysql.ibdata.model;
 
 import lombok.Data;
-import mysql.enums.PageTypeEnum;
+import mysql.ibdata.enums.PageTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;

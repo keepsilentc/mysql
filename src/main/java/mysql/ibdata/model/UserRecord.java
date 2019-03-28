@@ -1,4 +1,4 @@
-package mysql.model;
+package mysql.ibdata.model;
 
 import lombok.Data;
 import mysql.reader.Reader;
@@ -16,7 +16,6 @@ import mysql.reader.Reader;
  */
 @Data
 public class UserRecord implements Reader<UserRecord> {
-
 
 
     @Override

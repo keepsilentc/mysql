@@ -1,16 +1,19 @@
-package mysql.model;
+package mysql.ibdata.model;
 
 import lombok.Data;
 import mysql.reader.ByteReader;
 import mysql.reader.Reader;
 
 /**
+ * 13字节
+ * -----------------------------------------
  * info flags                   4bit
  * number of records owned      4bit
  * order                        13bit
  * record_type                  3bit
  * next record offset           2字节
  * infimum\0 或 supremum        8字节
+ * -----------------------------------------
  */
 @Data
 public class IndexSystemRecord implements Reader<IndexSystemRecord> {

@@ -1,4 +1,4 @@
-package mysql.enums;
+package mysql.ibdata.enums;
 
 public enum RecordTypeEnum {
     //0表示普通记录，1表示B+树非叶节点记录，2表示最小记录，3表示最大记录

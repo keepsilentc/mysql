@@ -1,4 +1,4 @@
-package mysql.enums;
+package mysql.ibdata.enums;
 
 import lombok.Getter;
 

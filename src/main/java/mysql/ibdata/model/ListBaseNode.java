@@ -1,4 +1,4 @@
-package mysql.model;
+package mysql.ibdata.model;
 
 import lombok.Data;
 import mysql.reader.ByteReader;
