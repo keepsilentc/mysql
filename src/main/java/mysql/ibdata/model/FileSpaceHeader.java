@@ -54,6 +54,7 @@ public class FileSpaceHeader implements Reader<FileSpaceHeader> {
         //4字节未使用
         byteReader.skip(4);
         this.size = byteReader.readInt();
+        this.freeLimit = byteReader.readInt();
         this.spaceFlags = byteReader.readInt();
         this.fragNUsed = byteReader.readInt();
         this.baseNodeForFreeList = new ListBaseNode().read(bytes, offset + byteReader.getPosition());

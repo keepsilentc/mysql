@@ -20,6 +20,8 @@ import java.util.List;
 @Data
 public class XDesEntry implements Reader<XDesEntry> {
 
+    private final int index;
+
     private long segmentId;
 
     private ListNode listNode;
@@ -29,6 +31,10 @@ public class XDesEntry implements Reader<XDesEntry> {
     //16字节 128bit，划分给64页，每页2bit
     private List<Integer> pageStateBitMapList;
 
+    public XDesEntry(int index){
+        this.index = index;
+    }
+
     @Override
     public XDesEntry read(byte[] bytes, int offset) {
         ByteReader byteReader = new ByteReader(bytes, offset);
@@ -36,12 +42,6 @@ public class XDesEntry implements Reader<XDesEntry> {
         this.listNode = new ListNode().read(bytes, offset + byteReader.getPosition());
         byteReader.skip(12);
         this.state = byteReader.readInt();
-        List<Integer> pageStateBitMapList = new ArrayList<>(64);
-        for (int i = 0; i < 64; i++) {
-            pageStateBitMapList.add(byteReader.read());
-            byteReader.skip(1);
-        }
-        this.pageStateBitMapList = pageStateBitMapList;
         return this;
     }
 }

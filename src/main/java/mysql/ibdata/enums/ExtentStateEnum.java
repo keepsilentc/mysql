@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum ExtentStateEnum {
-    FREE("空闲的区", 0),
-    FREE_FRAG("有剩余空间的碎片区", 1),
-    FULL_FRAG("没有剩余空间的碎片区", 2),
-    FSEG("附属于某个段的区", 3);
+    FREE("空闲的区", 1),
+    FREE_FRAG("有剩余空间的碎片区", 2),
+    FULL_FRAG("没有剩余空间的碎片区", 3),
+    FSEG("附属于某个段的区", 4);
 
     private String desc;
     private int code;
