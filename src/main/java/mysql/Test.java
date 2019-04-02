@@ -6,6 +6,7 @@ import mysql.ibdata.model.IndexHeader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) throws IOException {
@@ -29,12 +30,17 @@ public class Test {
             byte[] bytes = ibdataFileReader.read(2);
             short nextRecord = ByteUtils.bytes2Short(bytes);
 
-            ibdataFileReader.setPosition(3, nextRecord);
-            byte[] bytes1 = new byte[8];
-            bytes1[0] = 0;
-            System.arraycopy(ibdataFileReader.skip(1).read(7), 0, bytes1, 1, 7);
+            ibdataFileReader.setPosition(3, nextRecord - 5);
+            byte[] bits = ByteUtils.getBits(ibdataFileReader.read(1)[0], 4, 7);
+            System.out.println(Arrays.toString(bits));
+
+            byte[] bits1 = ByteUtils.getBits(ibdataFileReader.skip(1).read(1)[0], 5, 7);
+            System.out.println(Arrays.toString(bits1));
+
+            System.out.println(ByteUtils.bytes2Short(ibdataFileReader.read(2)));
+
             System.out.println("-------------------");
-            System.out.println("data : " + ByteUtils.bytes2Long(bytes1));
+            ibdataFileReader.skip(8);
             System.out.println("page number : " + ByteUtils.bytes2Int(ibdataFileReader.read(4)));
         }
 
