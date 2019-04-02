@@ -1,5 +1,8 @@
 package mysql;
 
+import mysql.constants.Constants;
+import mysql.ibdata.model.IndexHeader;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,19 +17,37 @@ public class Test {
             }
         }));
 
-        ibdataFileReader.setPosition(3, 38 + 56);
-        ibdataFileReader.skip(3);
+        ibdataFileReader.setPosition(3, 38);
 
-        while (true) {
-            System.out.println(ibdataFileReader.getOffset());
-            short nextRecord = ByteUtils.bytes2Short(ibdataFileReader.read(2));
-            if (nextRecord == 0) {
-                break;
-            }
-            ibdataFileReader.skip(nextRecord - 2);
+        IndexHeader indexHeader = new IndexHeader().read(ibdataFileReader.read(56));
+        short nDirSlot = indexHeader.getNDirSlot();
+
+        ibdataFileReader.setPosition(3, Constants.pageByte - 8 - nDirSlot * 2);
+
+        for (int i = 0; i < nDirSlot; i++) {
+            ibdataFileReader.setPosition(3, Constants.pageByte - 8 - nDirSlot * 2 + i * 2);
+            byte[] bytes = ibdataFileReader.read(2);
+            short nextRecord = ByteUtils.bytes2Short(bytes);
+
+            ibdataFileReader.setPosition(3, nextRecord);
+            byte[] bytes1 = new byte[8];
+            bytes1[0] = 0;
+            System.arraycopy(ibdataFileReader.skip(1).read(7), 0, bytes1, 1, 7);
+            System.out.println("-------------------");
+            System.out.println("data : " + ByteUtils.bytes2Long(bytes1));
+            System.out.println("page number : " + ByteUtils.bytes2Int(ibdataFileReader.read(4)));
         }
 
-        ibdataFileReader.setPosition(3,110);
+//        ibdataFileReader.skip(3);
+//
+//        while (true) {
+//            System.out.println(ibdataFileReader.getOffset());
+//            short nextRecord = ByteUtils.bytes2Short(ibdataFileReader.read(2));
+//            if (nextRecord == 0) {
+//                break;
+//            }
+//            ibdataFileReader.skip(nextRecord - 2);
+//        }
 
 //        int pageNumber = 4;
 //        while (pageNumber != -1) {
